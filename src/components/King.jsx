@@ -23,6 +23,10 @@ export function King(props) {
     return () => actions[animation].fadeOut(0.5);
   }, [animation]);
 
+  useEffect(() => {
+    actions["CharacterArmature|Wave"].play();
+  }, []);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Root_Scene">

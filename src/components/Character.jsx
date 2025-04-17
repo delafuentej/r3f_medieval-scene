@@ -13,7 +13,7 @@ export function Character(props) {
     "/models/Character Animated.glb"
   );
   const { actions } = useAnimations(animations, group);
-
+  console.log("actions", actions);
   const { animation } = useControls("Sigismund Controls", {
     animation: { value: "Idle", options: Object.keys(actions) },
   });
@@ -25,7 +25,7 @@ export function Character(props) {
   }, [animation]);
 
   useEffect(() => {
-    actions["Attacking_Idle"].play();
+    actions["CharacterArmature|PickUp"].play();
   }, []);
 
   return (
