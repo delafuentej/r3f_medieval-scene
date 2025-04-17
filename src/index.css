@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap");
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 4rem;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background-color: #b8c6db;
+  background-image: linear-gradient(0deg, #b8c6db 0%, #f5f7fa 74%);
+  opacity: 1;
+}
+
+.loading-screen--hidden {
+  animation: fade-out 0.5s ease-in-out forwards 1s;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.loading-screen__title {
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #1a202c;
+  margin: 0;
+  text-align: center;
+}
+
+.progress__container {
+  width: 100%;
+  max-width: 500px;
+  height: 1rem;
+  background-color: rgb(102 106 113 / 42%);
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+
+.progress__bar {
+  width: 0;
+  height: 100%;
+  background-color: #1a202c;
+  transition: width 0.5s ease-in-out;
+}
+
+/* 📱 Media query para móviles */
+@media (max-width: 480px) {
+  .loading-screen {
+    padding: 2rem;
+  }
+
+  .loading-screen__title {
+    font-size: 2rem;
+  }
+
+  .progress__container {
+    height: 0.75rem;
+  }
+}
