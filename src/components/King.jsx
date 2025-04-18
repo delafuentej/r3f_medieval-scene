@@ -34,7 +34,7 @@ export function King(props) {
           <group
             name="CharacterArmature"
             rotation={[-Math.PI / 2, 0, 0]}
-            scale={100}
+            scale={80}
           >
             <primitive object={nodes.Root} />
           </group>
@@ -44,7 +44,7 @@ export function King(props) {
             material={materials.Metal}
             skeleton={nodes.King_Feet.skeleton}
             rotation={[-Math.PI / 2, 0, 0]}
-            scale={100}
+            scale={80}
           />
           <group name="King_Legs" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
             <skinnedMesh

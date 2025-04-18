@@ -13,7 +13,7 @@ export function Character(props) {
     "/models/Character Animated.glb"
   );
   const { actions } = useAnimations(animations, group);
-  console.log("actions", actions);
+
   const { animation } = useControls("Sigismund Controls", {
     animation: { value: "Idle", options: Object.keys(actions) },
   });
@@ -35,7 +35,7 @@ export function Character(props) {
           <group
             name="CharacterArmature"
             rotation={[-Math.PI / 2, 0, 0]}
-            scale={50}
+            scale={35}
           >
             <primitive object={nodes.Root} />
           </group>
@@ -43,7 +43,7 @@ export function Character(props) {
             name="Rogue"
             position={[0, 0, 0.166]}
             rotation={[-Math.PI / 2, 0, 0]}
-            scale={50}
+            scale={35}
           >
             <skinnedMesh
               name="Rogue_1"
@@ -89,7 +89,7 @@ export function Character(props) {
             skeleton={nodes.Rogue001.skeleton}
             position={[0, 0, 0.166]}
             rotation={[-Math.PI / 2, 0, 0]}
-            scale={50}
+            scale={35}
           />
         </group>
       </group>

@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <LoadingScreen />
-      <Canvas camera={{ position: [0, 6, 18], fov: 62 }}>
+      <Canvas camera={{ position: [0, 6, 18], fov: 82 }}>
         <group>
           <Experience />
         </group>

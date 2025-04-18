@@ -50,6 +50,8 @@ const Floor = () => {
         displacementMap={props.displacementMap}
         displacementBias={0}
         transparent
+        receiveShadow
+        castShadow
       />
     </mesh>
   );
