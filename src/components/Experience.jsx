@@ -1,15 +1,25 @@
 import { useGLTF, Text, Text3D, Billboard } from "@react-three/drei";
+import { useRef, useState, useEffect } from "react";
+import * as THREE from "three";
+
+import WeatherSystem from "./Weather/WeatherSystem";
+import RainController from "./Weather/RainController";
+import Lightning from "./Weather/Lightning";
+import Clouds from "./Weather/Clouds";
+
 import { Character } from "./Character";
 import Floor from "./Floor";
 import King from "./King";
 import Castle from "./Castle";
 import Princess from "./Princess";
 import Archer from "./Archer";
-import Knight from "./Knight";
-
-import * as THREE from "three";
 
 export const Experience = () => {
+  const ambientLightRef = useRef();
+  const timeRef = useRef(0);
+  const [weather, setWeather] = useState("sunny");
+  console.log("weather", weather);
+  const [cloudPositions, setCloudPositions] = useState([]);
   const woodenSign = useGLTF("models/Wooden Sign.glb");
 
   const archerPositions = [
@@ -19,10 +29,35 @@ export const Experience = () => {
     [-8, 8.75, 8],
   ];
 
+  useEffect(() => {
+    let currentIndex = 0;
+    const weathers = ["sunny", "cloudy", "rainy", "storm", "rainy", "cloudy"];
+    const interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % weathers.length;
+      setWeather(weathers[currentIndex]);
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
+      <ambientLight ref={ambientLightRef} />
+      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      <WeatherSystem
+        weather={weather}
+        timeRef={timeRef}
+        lightRef={ambientLightRef}
+        onWeatherChange={(w) => setWeather(w)}
+      />
+      <Lightning weather={weather} />
+      <Clouds weather={weather} onCloudsReady={setCloudPositions} />
+
+      <RainController weather={weather} cloudPositions={cloudPositions} />
+
       <group position={[0, 0, 0]} rotation-y={THREE.MathUtils.degToRad(15)}>
         <Floor />
+
         <Billboard position={[-20, 15, 0]}>
           <Text3D
             bevelEnabled
@@ -85,20 +120,6 @@ export const Experience = () => {
             </group>
           ))}
           {/* knights */}
-
-          <group position={[9, 0, -2]} rotation-y={Math.PI * 0.5}>
-            <group position-y={1.75}>
-              <Text fontSize={0.2}>
-                Knight-1
-                <meshStandardMaterial color={"black"} side={THREE.DoubleSide} />
-              </Text>
-              <Text fontSize={0.2} position-y={0.5}>
-                Knight
-                <meshStandardMaterial color={"grey"} side={THREE.DoubleSide} />
-              </Text>
-            </group>
-            <Knight />
-          </group>
 
           <group position={[8, 4.7, -1]} rotation-y={Math.PI * 0.5}>
             <group position-y={1.75}>

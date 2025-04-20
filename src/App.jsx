@@ -2,6 +2,7 @@ import { Environment, OrbitControls, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
 import LoadingScreen from "./components/LoadingScreen";
+
 function App() {
   return (
     <>
@@ -12,7 +13,6 @@ function App() {
         </group>
         <OrbitControls />
         <Environment preset="sunset" />
-        <Sky />
       </Canvas>
     </>
   );
