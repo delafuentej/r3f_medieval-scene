@@ -39,7 +39,7 @@ const Floor = () => {
       rotation={[Math.PI * 0.5, 0, 0]}
       receiveShadow
     >
-      <planeGeometry args={[40, 40]} />
+      <planeGeometry args={[20, 20]} />
       <meshStandardMaterial
         {...props}
         side={THREE.DoubleSide}
