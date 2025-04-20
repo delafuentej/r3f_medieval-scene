@@ -20,6 +20,7 @@ export const Experience = () => {
   const [weather, setWeather] = useState("sunny");
   console.log("weather", weather);
   const [cloudPositions, setCloudPositions] = useState([]);
+
   const woodenSign = useGLTF("models/Wooden Sign.glb");
 
   const archerPositions = [

@@ -1,6 +1,6 @@
-import { Cloud } from "@react-three/drei/core/Cloud";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { Cloud } from "@react-three/drei/core/Cloud";
 import { useRef, useMemo, useEffect, useState } from "react";
 
 // Climas posibles: "sunny", "cloudy", "rainy", "storm"
@@ -66,14 +66,21 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
           }
           return prev;
         }
+
+        const PHASE = {
+          ENTER: "enter",
+          ACTIVE: "active",
+          EXIT: "exit",
+          INACTIVE: "inactive",
+        };
         // Fase de salida
         if (prev > targetClouds) {
           for (let i = targetClouds; i < prev; i++) {
-            clouds[i].phase = "exit";
+            clouds[i].phase = PHASE.EXIT;
           }
         } else {
           // Fase de entrada
-          clouds[prev].phase = "enter";
+          clouds[prev].phase = PHASE.ENTER;
         }
         return prev < targetClouds ? prev + 1 : prev - 1;
       });
@@ -87,15 +94,15 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
       const cloud = clouds[i];
       if (!cloud) return;
 
-      if (cloud.phase === "enter") {
+      if (cloud.phase === PHASE.ENTER) {
         cloud.position.lerp(cloud.targetPosition, 0.02);
         child.position.copy(cloud.position);
 
         if (cloud.position.distanceTo(cloud.targetPosition) < 0.1) {
-          cloud.phase = "active";
+          cloud.phase = PHASE.ACTIVE;
           cloud.position.copy(cloud.targetPosition);
         }
-      } else if (cloud.phase === "active") {
+      } else if (cloud.phase === PHASE.ACTIVE) {
         cloud.position.x += cloud.direction.x * cloud.speed;
         cloud.position.z += cloud.direction.z * cloud.speed;
 
@@ -105,27 +112,17 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
         if (cloud.position.z < -10) cloud.position.z = 10;
 
         child.position.copy(cloud.position);
-      } else if (cloud.phase === "exit") {
+      } else if (cloud.phase === PHASE.EXIT) {
         cloud.position.lerp(cloud.exitPosition, 0.02);
         if (child.position.distanceTo(cloud.exitPosition) < 1) {
-          cloud.status = "inactive"; // La nube se vuelve inactiva después de salir
+          cloud.status = PHASE.INACTIVE; // La nube se vuelve inactiva después de salir
         }
         child.position.copy(cloud.position);
-
-        if (cloud.position.distanceTo(cloud.exitPosition) < 0.1) {
-          cloud.phase = "done";
-        }
       }
     });
   });
 
-  // Apariencia dinámica basada en clima
-  const getAppearance = () => {
-    const { opacity, volume, color } = settings[weather];
-    return { opacity, volume, color };
-  };
-
-  const { opacity, volume, color } = getAppearance();
+  const { opacity, volume, color } = settings[weather];
 
   return (
     <group ref={groupRef}>
@@ -135,7 +132,7 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
             seed={cloud.seed}
             scale={1.5}
             segments={40}
-            bounds={[6, 2, 2]}
+            // bounds={[6, 2, 2]}
             volume={volume}
             color={color}
             fade={80}

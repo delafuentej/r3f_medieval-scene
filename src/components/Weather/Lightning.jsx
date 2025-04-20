@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { AudioListener, AudioLoader, Audio as ThreeAudio } from "three";
-import thunderSound from "/sounds/thunder.mp3";
 import { useThree } from "@react-three/fiber";
+
+import thunderSound from "/sounds/thunder.mp3";
 
 const Lightning = ({ weather }) => {
   const lightRef = useRef();
