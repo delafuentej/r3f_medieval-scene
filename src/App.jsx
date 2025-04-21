@@ -7,11 +7,11 @@ function App() {
   return (
     <>
       <LoadingScreen />
-      <Canvas camera={{ position: [0, 6, 18], fov: 82 }}>
+      <Canvas camera={{ position: [0, 6, 18], fov: 42 }}>
         <group>
           <Experience />
         </group>
-        <OrbitControls />
+        <OrbitControls minDistance={4} maxDistance={72} />
         <Environment preset="sunset" />
       </Canvas>
     </>
