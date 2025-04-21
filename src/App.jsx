@@ -11,7 +11,12 @@ function App() {
         <group>
           <Experience />
         </group>
-        <OrbitControls minDistance={4} maxDistance={72} />
+        <OrbitControls
+          minDistance={4}
+          maxDistance={72}
+          maxPolarAngle={Math.PI / 2}
+          minPolarAngle={0}
+        />
         <Environment preset="sunset" />
       </Canvas>
     </>
