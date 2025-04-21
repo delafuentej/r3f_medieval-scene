@@ -2,6 +2,9 @@
 
 An immersive medieval scene built with **Three.js**, **React Three Fiber**, and **@react-three/drei**, featuring animations, dynamic weather conditions, day/night cycles, and engaging visual elements. Prepare to explore a magical 3D world right in your browser!
 
+🌐 Live Demo
+You can view the live application here: https://r3f-medieval-scene.vercel.app/
+
 ---
 
 ## ✨ Key Features
@@ -37,6 +40,14 @@ Each phase changes the lighting, sky colors, and shadows to simulate the passage
 - Full camera control with limited zoom and smooth navigation.
 
 ---
+
+### 🚀 Credit & Resources
+
+- 3D Models: Sketchfab | Poly Pizza | Custom Blender models
+- Sound Effects: Pixabay
+- HDRI Textures: Polyhaven
+- 3D Engine: Three.js
+- React Renderer: react-three-fiber
 
 ## 🖥️ Installation
 
