@@ -35,7 +35,7 @@ const weatherOptions = ["sunny", "cloudy", "rainy", "storm"];
 const WeatherSystem = ({ timeRef, lightRef, onWeatherChange }) => {
   const [time, setTime] = useState(0); // Rango 0 - 1
   const [weather, setWeather] = useState("sunny");
-  const dayDuration = 60; // duración de día en segundos
+  const dayDuration = 60; //in seconds
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +54,9 @@ const WeatherSystem = ({ timeRef, lightRef, onWeatherChange }) => {
     const t = (time * phases.length) % 1;
 
     const from = phases[phaseIndex];
+    console.log("from", from);
     const to = phases[nextIndex];
+    console.log("to", to);
 
     return {
       inclination: THREE.MathUtils.lerp(from.inclination, to.inclination, t),
@@ -79,37 +81,42 @@ const WeatherSystem = ({ timeRef, lightRef, onWeatherChange }) => {
 
   // Aplicar color y luz según el clima
   useEffect(() => {
-    const { ambientColor, lightColor, intensity } = {
+    const { lightColor, intensity } = {
       sunny: {
-        ambientColor: "#ffffff",
         lightColor: "#ffeb3b",
         intensity: 1.0,
       },
       cloudy: {
-        ambientColor: "#cfd8dc",
         lightColor: "#90a4ae",
         intensity: 0.8,
       },
       rainy: {
-        ambientColor: "#90a4ae",
         lightColor: "#607d8b",
         intensity: 0.6,
       },
       storm: {
-        ambientColor: "#37474f",
         lightColor: "#263238",
         intensity: 0.3,
       },
     }[weather];
 
     if (lightRef.current) {
-      lightRef.current.color.set(ambientColor);
-      lightRef.current.intensity = currentPhase.ambientIntensity;
+      const finalColor = new THREE.Color(lightColor).lerp(
+        currentPhase.lightColor,
+        0.5
+      );
+      lightRef.current.color.set(finalColor);
+      // Multiplicamos la intensidad del clima con la interpolada por fase
+      lightRef.current.intensity = intensity * currentPhase.ambientIntensity;
+      //   lightRef.current.color.set(ambientColor);
+      //   lightRef.current.intensity = currentPhase.ambientIntensity;
+      // }
     }
-  }, [weather, currentPhase]);
+  }, [weather, currentPhase, lightRef]);
 
   useFrame((_, delta) => {
     const newTime = (time + delta / dayDuration) % 1;
+    console.log("newTime", newTime);
     setTime(newTime);
     if (timeRef) timeRef.current = newTime;
   });

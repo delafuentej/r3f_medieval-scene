@@ -40,7 +40,11 @@ export const Experience = () => {
 
     return () => clearInterval(interval);
   }, []);
-
+  useEffect(() => {
+    if (ambientLightRef.current) {
+      console.log("Ambient light is mounted!", ambientLightRef.current);
+    }
+  }, []);
   return (
     <>
       <ambientLight ref={ambientLightRef} />

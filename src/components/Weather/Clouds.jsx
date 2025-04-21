@@ -18,6 +18,13 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
   const [activeClouds, setActiveClouds] = useState(0);
   const targetClouds = settings[weather].volume;
 
+  const PHASE = {
+    ENTER: "enter",
+    ACTIVE: "active",
+    EXIT: "exit",
+    INACTIVE: "inactive",
+  };
+
   const clouds = useMemo(() => {
     return Array.from({ length: cloudCount }, (_, i) => {
       const targetPosition = new THREE.Vector3(
@@ -48,7 +55,7 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
           0,
           Math.random() * 0.5
         ).normalize(),
-        phase: "enter", // "enter" | "active" | "exit"
+        phase: PHASE.ENTER, // "enter" | "active" | "exit"
       };
     });
   }, []);
@@ -67,12 +74,6 @@ const Clouds = ({ weather = "sunny", onCloudsReady }) => {
           return prev;
         }
 
-        const PHASE = {
-          ENTER: "enter",
-          ACTIVE: "active",
-          EXIT: "exit",
-          INACTIVE: "inactive",
-        };
         // Fase de salida
         if (prev > targetClouds) {
           for (let i = targetClouds; i < prev; i++) {
